@@ -1,183 +1,331 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Social Media Management</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desi Express - Mobile Web Page</title>
+    <style>
+        /* CSS Styling based on image_2.png Mobile UI */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #111;
+            background-image: url('image_2.png'); /* Chockboard-style texture */
+            background-size: cover;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        /* Phone frame container to simulate mobile size */
+        .phone-frame {
+            width: 375px; /* Common mobile portrait width */
+            height: 812px; /* Common mobile portrait height (e.g., iPhone X) */
+            border: 14px solid black;
+            border-radius: 36px;
+            overflow-y: auto; /* Allow scrolling inside the phone frame */
+            background: rgba(0, 0, 0, 0.85); /* Slightly darker content overlay */
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+            margin: 20px auto;
+            position: relative;
+        }
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        /* Content spacing and layout */
+        .content {
+            padding: 10px;
+        }
 
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .navbar {
-        background-color: #ff8787;
-    }
+        /* Header Style */
+        header {
+            background-color: #111;
+            padding: 15px 10px;
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid #FF8C00; /* Orange accent */
+            color: #FF8C00;
+        }
 
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(to right, #eef2f3, #dfe9f3);
-      padding: 80px 0;
-    }
+        header h1 {
+            font-size: 18px;
+            margin: 0;
+            flex-grow: 1;
+            text-align: center;
+            text-transform: uppercase;
+        }
 
-    .hero h1 {
-      font-weight: bold;
-      color: #2c3e50;
-    }
+        header img {
+            height: 25px; /* Icon size */
+            filter: brightness(0) invert(1); /* White icons */
+        }
 
-    .hero p {
-      color: #555;
-    }
+        header .icon-container {
+            display: flex;
+            gap: 15px;
+        }
 
-    .hero img {
-      max-width: 100%;
-    }
+        /* Section Headings */
+        h2 {
+            font-family: 'Georgia', serif;
+            font-size: 24px;
+            color: #FFDAB9; /* Peachy-cream text */
+            text-align: center;
+            margin: 25px 0 15px;
+            font-weight: bold;
+        }
 
-    /* Services */
-    .service-box {
-      padding: 20px;
-      border-radius: 10px;
-      background: #fff;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-      transition: 0.3s;
-    }
+        /* Item Categories (Veg/Non-Veg) */
+        h3 {
+            font-size: 16px;
+            color: #FF8C00;
+            text-transform: uppercase;
+            border-bottom: 1px dashed #FF8C00;
+            padding-bottom: 5px;
+            margin-top: 15px;
+            display: inline-block;
+        }
 
-    .service-box:hover {
-      transform: translateY(-5px);
-    }
+        /* Grid Layout for categories */
+        .category-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
 
-    .service-box i {
-      font-size: 30px;
-      color: #ff6b00;
-      margin-bottom: 10px;
-    }
+        /* Food Item List */
+        .item-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
 
-    /* Contact */
-    .contact {
-      background: #f8f9fa;
-      padding: 60px 0;
-    }
+        .item-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 5px;
+        }
 
-    /* WhatsApp Button */
-    .whatsapp {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: #000000;
-      color: white;
-      font-size: 22px;
-      padding: 12px 16px;
-      border-radius: 60%;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-      z-index: 1000;
-    }
+        .item-list li .item-details {
+            flex-grow: 1;
+            padding-right: 10px;
+        }
 
-    .whatsapp:hover {
-      color: white;
-      background: #ff3434;
-    }
-  </style>
+        .item-list li .item-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: white;
+        }
+
+        .item-list li .item-desc {
+            font-size: 10px;
+            color: #aaa;
+        }
+
+        .item-list li .item-price {
+            font-size: 14px;
+            font-weight: bold;
+            color: #FFD700; /* Gold/yellow price */
+            white-space: nowrap;
+        }
+
+        /* Stylized गोलाकार (Circular) Pictures */
+        .circular-image {
+            border-radius: 50%;
+            border: 2px solid #FF8C00; /* Orange border */
+            overflow: hidden;
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            display: block;
+            margin: 10px auto; /* Center by default */
+        }
+
+        /* Special positioning for large noodle/rice dishes from image_1.png style */
+        .noodle-dishes {
+            position: absolute;
+            right: 15px;
+            top: 450px;
+            z-index: 2;
+        }
+        .rice-dishes {
+            position: absolute;
+            right: 15px;
+            top: 120px;
+            z-index: 2;
+        }
+
+        /* Button Style */
+        .btn {
+            background-color: #333;
+            color: #FF8C00;
+            border: 1px solid #FF8C00;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 10px;
+            text-transform: uppercase;
+            cursor: pointer;
+            margin-top: 5px;
+            display: inline-block;
+        }
+
+        /* Footer Style */
+        footer {
+            background-color: #111;
+            padding: 15px 10px;
+            border-top: 2px solid #FF8C00;
+            text-align: center;
+            font-size: 10px;
+            color: #FFDAB9;
+            text-transform: uppercase;
+        }
+        footer p { margin: 2px 0; }
+        footer .gst-extra { font-size: 12px; color: green; font-weight: bold; margin-bottom: 10px; }
+
+    </style>
 </head>
-
 <body>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light  shadow-sm">
-  <div class="container ">
-    <a class="navbar-brand fw-bold" href="#">Konark</a>
-    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <div class="phone-frame">
+        <header>
+            <div class="icon-container">
+                <img src="menu_icon.png" alt="Menu" /> <img src="cart_icon.png" alt="Cart" />
+            </div>
+            <h1>DESI EXPRESS - INDIAN FAST FOOD</h1>
+        </header>
 
-    <div class="collapse navbar-collapse" id="nav">
-      <ul class="navbar-nav ms-auto">
-        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-      </ul>
+        <main class="content">
+
+            <img src="flames.png" alt="Decorative Flames" style="position: absolute; left: 0; top: 80px; width: 100px; opacity: 0.7; z-index: 1;" />
+            <img src="cherry_tomato.png" alt="Cherry Tomato" style="position: absolute; left: 30px; top: 180px; width: 20px; opacity: 0.9; z-index: 1;" />
+
+            <section id="rice">
+                <h2>RICE & PULAO</h2>
+                <div class="category-grid">
+                    <div>
+                        <h3>Veg</h3>
+                        <ul class="item-list">
+                            <li><div class="item-details"><div class="item-name">Veg Pulao</div></div><div class="item-price">₹120</div></li>
+                            <li><div class="item-details"><div class="item-name">Kashmiri Pulao</div></div><div class="item-price">₹150</div></li>
+                            <li><div class="item-details"><div class="item-name">Peas Pulao</div></div><div class="item-price">₹120</div></li>
+                            <li><div class="item-details"><div class="item-name">Jeera Rice</div></div><div class="item-price">₹110</div></li>
+                            <li><div class="item-details"><div class="item-name">Ghee Rice</div></div><div class="item-price">₹120</div></li>
+                            <li><div class="item-details"><div class="item-name">Plain Rice</div></div><div class="item-price">₹80</div></li>
+                            <li><div class="item-details"><div class="item-name">Veg Fried Rice [Full]</div></div><div class="item-price">₹130</div></li>
+                            <li><div class="item-details"><div class="item-name">Schezwan Veg Fried Rice</div></div><div class="item-price">₹140</div></li>
+                            <li><div class="item-details"><div class="item-name">Mushroom Fried Rice</div></div><div class="item-price">₹140</div></li>
+                            <li><div class="item-details"><div class="item-name">Schezwan Mushroom Fried Rice</div></div><div class="item-price">₹150</div></li>
+                            <li><div class="item-details"><div class="item-name">Chilly Garlic Fried Rice</div></div><div class="item-price">₹170</div></li>
+                            <li><div class="item-details"><div class="item-name">Street-style Veg Fried Rice [Small portion]</div><div class="item-desc">(From original fry rice)</div></div><div class="item-price">₹59</div></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Non-Veg</h3>
+                        <ul class="item-list">
+                            <li><div class="item-details"><div class="item-name">Egg Fried Rice</div></div><div class="item-price">₹150</div></li>
+                            <li><div class="item-details"><div class="item-name">Schezwan Egg Fried Rice</div></div><div class="item-price">₹160</div></li>
+                            <li><div class="item-details"><div class="item-name">Chicken Fried Rice</div></div><div class="item-price">₹190</div></li>
+                            <li><div class="item-details"><div class="item-name">Schezwan Chicken Fried Rice</div></div><div class="item-price">₹200</div></li>
+                            <li><div class="item-details"><div class="item-name">Mixed Fried Rice</div></div><div class="item-price">₹230</div></li>
+                            <li><div class="item-details"><div class="item-name">Schezwan Mixed Fried Rice</div></div><div class="item-price">₹240</div></li>
+                            <li><div class="item-details"><div class="item-name">Triple Fried Rice</div></div><div class="item-price">₹250</div></li>
+                            <li><div class="item-details"><div class="item-name">Shanghai Fried Rice</div></div><div class="item-price">₹250</div></li>
+                            <li><div class="item-details"><div class="item-name">Homies Spcl Fried Rice</div></div><div class="item-price">₹260</div></li>
+                        </ul>
+                    </div>
+                </div>
+                <img src="triple_fried_rice.png" alt="Triple Fried Rice" class="circular-image rice-dishes" style="width: 100px; height: 100px;" />
+            </section>
+
+            <section id="noodles">
+                <h2>NOODLES</h2>
+                <div class="category-grid">
+                    <div>
+                        <h3>Veg</h3>
+                        <ul class="item-list">
+                            <li><div class="item-details"><div class="item-name">Veg Noodles [Full]</div></div><div class="item-price">₹130</div></li>
+                            <li><div class="item-details"><div class="item-name">Schezwan Veg Noodles</div></div><div class="item-price">₹140</div></li>
+                            <li><div class="item-details"><div class="item-name">Mushroom Noodles</div></div><div class="item-price">₹150</div></li>
+                            <li><div class="item-details"><div class="item-name">Mushroom Noodles Schezwan</div></div><div class="item-price">₹160</div></li>
+                            <li><div class="item-details"><div class="item-name">Veg Hakka Noodles</div></div><div class="item-price">₹160</div></li>
+                            <li><div class="item-details"><div class="item-name">Veg Chowmein (Noodles) [Small portion]</div><div class="item-desc">(From original Chawmein)</div></div><div class="item-price">₹59</div></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Non-Veg</h3>
+                        <ul class="item-list">
+                            <li><div class="item-details"><div class="item-name">Egg Noodles</div></div><div class="item-price">₹150</div></li>
+                            <li><div class="item-details"><div class="item-name">Schezwan Egg Noodles</div></div><div class="item-price">₹160</div></li>
+                            <li><div class="item-details"><div class="item-name">Chicken Noodles</div></div><div class="item-price">₹200</div></li>
+                            <li><div class="item-details"><div class="item-name">Schezwan Chicken Noodles</div></div><div class="item-price">₹210</div></li>
+                            <li><div class="item-details"><div class="item-name">Mixed Noodles</div></div><div class="item-price">₹230</div></li>
+                            <li><div class="item-details"><div class="item-name">Schezwan Mixed Noodles</div></div><div class="item-price">₹240</div></li>
+                            <li><div class="item-details"><div class="item-name">Chicken Hakka Noodles</div></div><div class="item-price">₹230</div></li>
+                            <li><div class="item-details"><div class="item-name">Shanghai Chicken Noodles</div></div><div class="item-price">₹250</div></li>
+                            <li><div class="item-details"><div class="item-name">American Chopsy</div></div><div class="item-price">₹280</div></li>
+                            <li><div class="item-details"><div class="item-name">Chinese Chopsy</div></div><div class="item-price">₹280</div></li>
+                        </ul>
+                    </div>
+                </div>
+                <img src="schezwan_noodles.png" alt="Schezwan Noodles" class="circular-image noodle-dishes" style="width: 100px; height: 100px;" />
+            </section>
+
+            <section id="starters">
+                <h2>STARTERS & MORE</h2>
+                <div class="category-grid" style="grid-template-columns: 1fr; gap: 20px;">
+                    <div style="display: flex; gap: 15px;">
+                        <img src="alo_tikki_burger.png" alt="Aloo Tikki Burger" class="circular-image" />
+                        <div>
+                            <h3>Burgers</h3>
+                            <ul class="item-list">
+                                <li><div class="item-details"><div class="item-name">Aloo Tikki Burger</div></div><div class="item-price">₹49</div></li>
+                                <li><div class="item-details"><div class="item-name">Aloo Tikki Cheese Burger</div></div><div class="item-price">₹59</div></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; gap: 15px; flex-direction: row-reverse;">
+                         <img src="white_sauce_pasta.png" alt="White Sauce Pasta" class="circular-image" />
+                         <div>
+                            <h3>Pasta</h3>
+                            <ul class="item-list">
+                                <li><div class="item-details"><div class="item-name">White Sauce Pasta [Small portion]</div><div class="item-desc">(From original pasta)</div></div><div class="item-price">₹109</div></li>
+                            </ul>
+                         </div>
+                    </div>
+
+                    <div>
+                        <h3>Momos (6 Pcs)</h3>
+                        <ul class="item-list">
+                            <li><div class="item-details"><div class="item-name">Steamed Momos</div></div><div class="item-price">₹49</div></li>
+                            <li><div class="item-details"><div class="item-name">Fried Momos</div></div><div class="item-price">₹59</div></li>
+                        </ul>
+                    </div>
+
+                    <div style="display: flex; gap: 15px;">
+                        <img src="kababs.png" alt="Kababs" class="circular-image" />
+                        <div>
+                            <h3>Kababs</h3>
+                            <ul class="item-list">
+                                <li><div class="item-details"><div class="item-name">Veg Soya Kabab (3 Pcs)</div></div><div class="item-price">₹59</div></li>
+                                <li><div class="item-details"><div class="item-name">Roasted Kabab (4 Pcs)</div></div><div class="item-price">₹79</div></li>
+                                <li><div class="item-details"><div class="item-name">Chilli Kabab (4 Pcs)</div></div><div class="item-price">₹89</div></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+        <footer>
+            <div class="gst-extra">GST 5% EXTRA</div>
+            <p>Terms & Conditions | Privacy Policy | Contact Us</p>
+        </footer>
     </div>
-  </div>
-</nav>
-
-<!-- Hero -->
-<section class="hero">
-  <div class="container">
-    <div class="row align-items-center">
-
-      <div class="col-md-6">
-        <h1>Social Media Management</h1>
-        <p>Creating & Managing Your Social Media Presence</p>
-        <a href="#contact" class="btn btn-warning mt-3">Contact Us</a>
-      </div>
-
-      <div class="col-md-6 text-center">
-        <img src="https://cdn-icons-png.flaticon.com/512/4140/4140048.png" alt="">
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- Services -->
-<section id="services" class="py-5">
-  <div class="container text-center">
-    <h2 class="mb-4">Our Services</h2>
-
-    <div class="row g-4">
-      <div class="col-md-3" >
-        <div class="service-box" style="background: linear-gradient(45deg, #ffd45d, #ff8787);">
-          <i class="fas fa-pen"></i>
-          <h5>Content Creation</h5>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="service-box" style="background: linear-gradient(45deg, #ffd45d, #ff8787);">
-          <i class="fas fa-share-alt"></i>
-          <h5>Social Media Management</h5>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="service-box" style="background: linear-gradient(45deg, #ffd45d, #ff8787);">
-          <i class="fas fa-chart-line"></i>
-          <h5>Analytics & Reporting</h5>
-        </div>
-      </div>
-
-      <div class="col-md-3">
-        <div class="service-box" style="background: linear-gradient(45deg, #ffd45d, #ff8787);">
-          <i class="fas fa-bullhorn"></i>
-          <h5>Ad Campaigns</h5>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Contact -->
-<section id="contact" class="contact"  style="background: linear-gradient(to right, #eef2f3, #dfe9f3);" >
-  <div class="container text-center">
-    <h2>Contact Us</h2>
-    <p>📞 +91 95556 86717</p>
-    <p>📍 Lucknow, India</p>
-
-    <a href="tel:+919555686717" class="btn btn-primary">Call Now</a>
-  </div>
-</section>
-
-<!-- WhatsApp Button -->
-<a href="https://wa.me/919555686717" class="whatsapp" target="_blank">
-  <i class="fab fa-whatsapp"></i>
-</a>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
