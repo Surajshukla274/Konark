@@ -3,329 +3,402 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desi Express - Mobile Web Page</title>
+    <title>Desi Express - Menu</title>
     <style>
-        /* CSS Styling based on image_2.png Mobile UI */
+        /* CSS Styling for Mobile-First Design */
+        :root {
+            --bg-color: #121212;
+            --text-main: #ffffff;
+            --text-muted: #aaaaaa;
+            --accent-color: #ff7300;
+            --card-bg: #1e1e1e;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #111;
-            background-image: url('image_2.png'); /* Chockboard-style texture */
-            background-size: cover;
-            color: white;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             margin: 0;
             padding: 0;
-            display: flex;
-            justify-content: center;
+            padding-bottom: 20px;
         }
 
-        /* Phone frame container to simulate mobile size */
-        .phone-frame {
-            width: 375px; /* Common mobile portrait width */
-            height: 812px; /* Common mobile portrait height (e.g., iPhone X) */
-            border: 14px solid black;
-            border-radius: 36px;
-            overflow-y: auto; /* Allow scrolling inside the phone frame */
-            background: rgba(0, 0, 0, 0.85); /* Slightly darker content overlay */
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
-            margin: 20px auto;
-            position: relative;
-        }
-
-        /* Content spacing and layout */
-        .content {
-            padding: 10px;
-        }
-
-        /* Header Style */
         header {
-            background-color: #111;
-            padding: 15px 10px;
-            display: flex;
-            align-items: center;
-            border-bottom: 2px solid #FF8C00; /* Orange accent */
-            color: #FF8C00;
+            background-color: #000000;
+            text-align: center;
+            padding: 20px 10px;
+            border-bottom: 2px solid var(--accent-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         header h1 {
-            font-size: 18px;
             margin: 0;
-            flex-grow: 1;
-            text-align: center;
-            text-transform: uppercase;
-        }
-
-        header img {
-            height: 25px; /* Icon size */
-            filter: brightness(0) invert(1); /* White icons */
-        }
-
-        header .icon-container {
-            display: flex;
-            gap: 15px;
-        }
-
-        /* Section Headings */
-        h2 {
-            font-family: 'Georgia', serif;
+            color: var(--accent-color);
             font-size: 24px;
-            color: #FFDAB9; /* Peachy-cream text */
-            text-align: center;
-            margin: 25px 0 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .gst-note {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 5px;
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            overflow-x: auto;
+            background-color: var(--card-bg);
+            padding: 10px;
+            gap: 10px;
+            scrollbar-width: none; /* Hide scrollbar Firefox */
+        }
+        .tabs::-webkit-scrollbar {
+            display: none; /* Hide scrollbar Chrome/Safari */
+        }
+
+        .tab-btn {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid #444;
+            padding: 8px 16px;
+            border-radius: 20px;
+            white-space: nowrap;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background-color: var(--accent-color);
+            border-color: var(--accent-color);
+            color: #fff;
             font-weight: bold;
         }
 
-        /* Item Categories (Veg/Non-Veg) */
-        h3 {
+        /* Menu Container */
+        .menu-container {
+            padding: 15px;
+        }
+
+        .menu-section {
+            display: none; /* Hidden by default, toggled by JS */
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .menu-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .category-title {
+            font-size: 20px;
+            color: var(--accent-color);
+            border-bottom: 1px dashed #444;
+            padding-bottom: 8px;
+            margin-top: 20px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-style: italic;
+        }
+
+        .sub-category {
             font-size: 16px;
-            color: #FF8C00;
-            text-transform: uppercase;
-            border-bottom: 1px dashed #FF8C00;
-            padding-bottom: 5px;
-            margin-top: 15px;
+            background-color: #2a2a2a;
+            padding: 5px 10px;
+            border-radius: 4px;
+            margin-bottom: 10px;
             display: inline-block;
         }
 
-        /* Grid Layout for categories */
-        .category-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-        }
-
-        /* Food Item List */
-        .item-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .item-list li {
+        /* Item Row */
+        .menu-item {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            padding-bottom: 5px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #222;
         }
 
-        .item-list li .item-details {
-            flex-grow: 1;
-            padding-right: 10px;
+        .item-details {
+            flex: 1;
+            padding-right: 15px;
         }
 
-        .item-list li .item-name {
-            font-size: 14px;
+        .item-name {
+            font-size: 16px;
             font-weight: 500;
-            color: white;
+            margin-bottom: 4px;
         }
 
-        .item-list li .item-desc {
-            font-size: 10px;
-            color: #aaa;
+        .item-desc {
+            font-size: 12px;
+            color: var(--text-muted);
         }
 
-        .item-list li .item-price {
-            font-size: 14px;
+        .item-price {
+            font-size: 16px;
             font-weight: bold;
-            color: #FFD700; /* Gold/yellow price */
+            color: var(--text-main);
             white-space: nowrap;
         }
 
-        /* Stylized गोलाकार (Circular) Pictures */
-        .circular-image {
-            border-radius: 50%;
-            border: 2px solid #FF8C00; /* Orange border */
-            overflow: hidden;
-            width: 70px;
-            height: 70px;
-            object-fit: cover;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
-            display: block;
-            margin: 10px auto; /* Center by default */
+        .price-tag {
+            color: var(--accent-color);
+            font-size: 14px;
+            margin-right: 2px;
         }
-
-        /* Special positioning for large noodle/rice dishes from image_1.png style */
-        .noodle-dishes {
-            position: absolute;
-            right: 15px;
-            top: 450px;
-            z-index: 2;
-        }
-        .rice-dishes {
-            position: absolute;
-            right: 15px;
-            top: 120px;
-            z-index: 2;
-        }
-
-        /* Button Style */
-        .btn {
-            background-color: #333;
-            color: #FF8C00;
-            border: 1px solid #FF8C00;
-            border-radius: 4px;
-            padding: 5px 10px;
-            font-size: 10px;
-            text-transform: uppercase;
-            cursor: pointer;
-            margin-top: 5px;
-            display: inline-block;
-        }
-
-        /* Footer Style */
-        footer {
-            background-color: #111;
-            padding: 15px 10px;
-            border-top: 2px solid #FF8C00;
-            text-align: center;
-            font-size: 10px;
-            color: #FFDAB9;
-            text-transform: uppercase;
-        }
-        footer p { margin: 2px 0; }
-        footer .gst-extra { font-size: 12px; color: green; font-weight: bold; margin-bottom: 10px; }
 
     </style>
 </head>
 <body>
 
-    <div class="phone-frame">
-        <header>
-            <div class="icon-container">
-                <img src="menu_icon.png" alt="Menu" /> <img src="cart_icon.png" alt="Cart" />
-            </div>
-            <h1>DESI EXPRESS - INDIAN FAST FOOD</h1>
-        </header>
+    <header>
+        <h1>Indian Fast Food</h1>
+        <div class="gst-note">GST 5% EXTRA</div>
+    </header>
 
-        <main class="content">
-
-            <img src="flames.png" alt="Decorative Flames" style="position: absolute; left: 0; top: 80px; width: 100px; opacity: 0.7; z-index: 1;" />
-            <img src="cherry_tomato.png" alt="Cherry Tomato" style="position: absolute; left: 30px; top: 180px; width: 20px; opacity: 0.9; z-index: 1;" />
-
-            <section id="rice">
-                <h2>RICE & PULAO</h2>
-                <div class="category-grid">
-                    <div>
-                        <h3>Veg</h3>
-                        <ul class="item-list">
-                            <li><div class="item-details"><div class="item-name">Veg Pulao</div></div><div class="item-price">₹120</div></li>
-                            <li><div class="item-details"><div class="item-name">Kashmiri Pulao</div></div><div class="item-price">₹150</div></li>
-                            <li><div class="item-details"><div class="item-name">Peas Pulao</div></div><div class="item-price">₹120</div></li>
-                            <li><div class="item-details"><div class="item-name">Jeera Rice</div></div><div class="item-price">₹110</div></li>
-                            <li><div class="item-details"><div class="item-name">Ghee Rice</div></div><div class="item-price">₹120</div></li>
-                            <li><div class="item-details"><div class="item-name">Plain Rice</div></div><div class="item-price">₹80</div></li>
-                            <li><div class="item-details"><div class="item-name">Veg Fried Rice [Full]</div></div><div class="item-price">₹130</div></li>
-                            <li><div class="item-details"><div class="item-name">Schezwan Veg Fried Rice</div></div><div class="item-price">₹140</div></li>
-                            <li><div class="item-details"><div class="item-name">Mushroom Fried Rice</div></div><div class="item-price">₹140</div></li>
-                            <li><div class="item-details"><div class="item-name">Schezwan Mushroom Fried Rice</div></div><div class="item-price">₹150</div></li>
-                            <li><div class="item-details"><div class="item-name">Chilly Garlic Fried Rice</div></div><div class="item-price">₹170</div></li>
-                            <li><div class="item-details"><div class="item-name">Street-style Veg Fried Rice [Small portion]</div><div class="item-desc">(From original fry rice)</div></div><div class="item-price">₹59</div></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3>Non-Veg</h3>
-                        <ul class="item-list">
-                            <li><div class="item-details"><div class="item-name">Egg Fried Rice</div></div><div class="item-price">₹150</div></li>
-                            <li><div class="item-details"><div class="item-name">Schezwan Egg Fried Rice</div></div><div class="item-price">₹160</div></li>
-                            <li><div class="item-details"><div class="item-name">Chicken Fried Rice</div></div><div class="item-price">₹190</div></li>
-                            <li><div class="item-details"><div class="item-name">Schezwan Chicken Fried Rice</div></div><div class="item-price">₹200</div></li>
-                            <li><div class="item-details"><div class="item-name">Mixed Fried Rice</div></div><div class="item-price">₹230</div></li>
-                            <li><div class="item-details"><div class="item-name">Schezwan Mixed Fried Rice</div></div><div class="item-price">₹240</div></li>
-                            <li><div class="item-details"><div class="item-name">Triple Fried Rice</div></div><div class="item-price">₹250</div></li>
-                            <li><div class="item-details"><div class="item-name">Shanghai Fried Rice</div></div><div class="item-price">₹250</div></li>
-                            <li><div class="item-details"><div class="item-name">Homies Spcl Fried Rice</div></div><div class="item-price">₹260</div></li>
-                        </ul>
-                    </div>
-                </div>
-                <img src="triple_fried_rice.png" alt="Triple Fried Rice" class="circular-image rice-dishes" style="width: 100px; height: 100px;" />
-            </section>
-
-            <section id="noodles">
-                <h2>NOODLES</h2>
-                <div class="category-grid">
-                    <div>
-                        <h3>Veg</h3>
-                        <ul class="item-list">
-                            <li><div class="item-details"><div class="item-name">Veg Noodles [Full]</div></div><div class="item-price">₹130</div></li>
-                            <li><div class="item-details"><div class="item-name">Schezwan Veg Noodles</div></div><div class="item-price">₹140</div></li>
-                            <li><div class="item-details"><div class="item-name">Mushroom Noodles</div></div><div class="item-price">₹150</div></li>
-                            <li><div class="item-details"><div class="item-name">Mushroom Noodles Schezwan</div></div><div class="item-price">₹160</div></li>
-                            <li><div class="item-details"><div class="item-name">Veg Hakka Noodles</div></div><div class="item-price">₹160</div></li>
-                            <li><div class="item-details"><div class="item-name">Veg Chowmein (Noodles) [Small portion]</div><div class="item-desc">(From original Chawmein)</div></div><div class="item-price">₹59</div></li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h3>Non-Veg</h3>
-                        <ul class="item-list">
-                            <li><div class="item-details"><div class="item-name">Egg Noodles</div></div><div class="item-price">₹150</div></li>
-                            <li><div class="item-details"><div class="item-name">Schezwan Egg Noodles</div></div><div class="item-price">₹160</div></li>
-                            <li><div class="item-details"><div class="item-name">Chicken Noodles</div></div><div class="item-price">₹200</div></li>
-                            <li><div class="item-details"><div class="item-name">Schezwan Chicken Noodles</div></div><div class="item-price">₹210</div></li>
-                            <li><div class="item-details"><div class="item-name">Mixed Noodles</div></div><div class="item-price">₹230</div></li>
-                            <li><div class="item-details"><div class="item-name">Schezwan Mixed Noodles</div></div><div class="item-price">₹240</div></li>
-                            <li><div class="item-details"><div class="item-name">Chicken Hakka Noodles</div></div><div class="item-price">₹230</div></li>
-                            <li><div class="item-details"><div class="item-name">Shanghai Chicken Noodles</div></div><div class="item-price">₹250</div></li>
-                            <li><div class="item-details"><div class="item-name">American Chopsy</div></div><div class="item-price">₹280</div></li>
-                            <li><div class="item-details"><div class="item-name">Chinese Chopsy</div></div><div class="item-price">₹280</div></li>
-                        </ul>
-                    </div>
-                </div>
-                <img src="schezwan_noodles.png" alt="Schezwan Noodles" class="circular-image noodle-dishes" style="width: 100px; height: 100px;" />
-            </section>
-
-            <section id="starters">
-                <h2>STARTERS & MORE</h2>
-                <div class="category-grid" style="grid-template-columns: 1fr; gap: 20px;">
-                    <div style="display: flex; gap: 15px;">
-                        <img src="alo_tikki_burger.png" alt="Aloo Tikki Burger" class="circular-image" />
-                        <div>
-                            <h3>Burgers</h3>
-                            <ul class="item-list">
-                                <li><div class="item-details"><div class="item-name">Aloo Tikki Burger</div></div><div class="item-price">₹49</div></li>
-                                <li><div class="item-details"><div class="item-name">Aloo Tikki Cheese Burger</div></div><div class="item-price">₹59</div></li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div style="display: flex; gap: 15px; flex-direction: row-reverse;">
-                         <img src="white_sauce_pasta.png" alt="White Sauce Pasta" class="circular-image" />
-                         <div>
-                            <h3>Pasta</h3>
-                            <ul class="item-list">
-                                <li><div class="item-details"><div class="item-name">White Sauce Pasta [Small portion]</div><div class="item-desc">(From original pasta)</div></div><div class="item-price">₹109</div></li>
-                            </ul>
-                         </div>
-                    </div>
-
-                    <div>
-                        <h3>Momos (6 Pcs)</h3>
-                        <ul class="item-list">
-                            <li><div class="item-details"><div class="item-name">Steamed Momos</div></div><div class="item-price">₹49</div></li>
-                            <li><div class="item-details"><div class="item-name">Fried Momos</div></div><div class="item-price">₹59</div></li>
-                        </ul>
-                    </div>
-
-                    <div style="display: flex; gap: 15px;">
-                        <img src="kababs.png" alt="Kababs" class="circular-image" />
-                        <div>
-                            <h3>Kababs</h3>
-                            <ul class="item-list">
-                                <li><div class="item-details"><div class="item-name">Veg Soya Kabab (3 Pcs)</div></div><div class="item-price">₹59</div></li>
-                                <li><div class="item-details"><div class="item-name">Roasted Kabab (4 Pcs)</div></div><div class="item-price">₹79</div></li>
-                                <li><div class="item-details"><div class="item-name">Chilli Kabab (4 Pcs)</div></div><div class="item-price">₹89</div></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </main>
-
-        <footer>
-            <div class="gst-extra">GST 5% EXTRA</div>
-            <p>Terms & Conditions | Privacy Policy | Contact Us</p>
-        </footer>
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openMenu('starters')">Starters & Fast Food</button>
+        <button class="tab-btn" onclick="openMenu('rice')">Rice & Pulao</button>
+        <button class="tab-btn" onclick="openMenu('noodles')">Noodles</button>
     </div>
+
+    <div class="menu-container">
+        
+        <div id="starters" class="menu-section active">
+            <h2 class="category-title">Snacks & Starters</h2>
+            
+            <div class="sub-category">Burger & Pasta</div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Aloo Tikki Burger</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>49</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Aloo Tikki Cheese Burger</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>59</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">White Sauce Pasta</div>
+                    <div class="item-desc">[Half Portion]</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>109</div>
+            </div>
+
+            <div class="sub-category">Momos</div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Steam Momos</div>
+                    <div class="item-desc">(6 pieces)</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>49</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Fry Momos</div>
+                    <div class="item-desc">(6 pieces)</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>59</div>
+            </div>
+
+            <div class="sub-category">Kababs</div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Veg Soya Kabab</div>
+                    <div class="item-desc">(3 pieces)</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>59</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Roasted Kabab</div>
+                    <div class="item-desc">(4 pieces)</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>79</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Chilli Kabab</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>89</div>
+            </div>
+        </div>
+
+        <div id="rice" class="menu-section">
+            <h2 class="category-title">Rice Menu</h2>
+            
+            <div class="sub-category">Veg Rice</div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Veg Fried Rice [Half]</div>
+                    <div class="item-desc">Basic Fry Rice</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>59</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Plain Rice</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>80</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Jeera Rice</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>110</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Veg Pulao</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>120</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Veg Fried Rice [Full]</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>130</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Schezwan Veg Fried Rice</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>140</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Kashmiri Pulao</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>150</div>
+            </div>
+
+            <div class="sub-category">Non-Veg Rice</div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Egg Fried Rice</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>150</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Chicken Fried Rice</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>190</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Mixed Fried Rice</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>230</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Triple Fried Rice</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>250</div>
+            </div>
+        </div>
+
+        <div id="noodles" class="menu-section">
+            <h2 class="category-title">Noodles Menu</h2>
+            
+            <div class="sub-category">Veg Noodles</div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Chawmein (Veg Noodles)</div>
+                    <div class="item-desc">[Half Portion]</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>59</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Veg Noodles [Full]</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>130</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Schezwan Veg Noodles</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>140</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Mushroom Noodles</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>150</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Veg Hakka Noodles</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>160</div>
+            </div>
+
+            <div class="sub-category">Non-Veg Noodles</div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Egg Noodles</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>150</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Chicken Noodles</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>200</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Mixed Noodles</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>230</div>
+            </div>
+            <div class="menu-item">
+                <div class="item-details">
+                    <div class="item-name">Shanghai Chicken Noodles</div>
+                </div>
+                <div class="item-price"><span class="price-tag">₹</span>250</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function openMenu(menuName) {
+            // Hide all menu sections
+            var i;
+            var x = document.getElementsByClassName("menu-section");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+                x[i].classList.remove("active");
+            }
+            
+            // Remove 'active' class from all buttons
+            var btns = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < btns.length; i++) {
+                btns[i].classList.remove("active");
+            }
+            
+            // Show the current menu section, and add an "active" class to the button that opened the tab
+            document.getElementById(menuName).style.display = "block";
+            document.getElementById(menuName).classList.add("active");
+            event.currentTarget.classList.add("active");
+        }
+    </script>
 
 </body>
 </html>
