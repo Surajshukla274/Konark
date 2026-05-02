@@ -1,404 +1,563 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Desi Express - Menu</title>
-    <style>
-        /* CSS Styling for Mobile-First Design */
-        :root {
-            --bg-color: #121212;
-            --text-main: #ffffff;
-            --text-muted: #aaaaaa;
-            --accent-color: #ff7300;
-            --card-bg: #1e1e1e;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Rowdy Cafe | Break the Rule, Taste the Difference</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            margin: 0;
-            padding: 0;
-            padding-bottom: 20px;
-        }
+    body {
+      background: #0a0a0a;
+      font-family: 'Inter', sans-serif;
+      color: #f5f5f5;
+      scroll-behavior: smooth;
+    }
 
-        header {
-            background-color: #000000;
-            text-align: center;
-            padding: 20px 10px;
-            border-bottom: 2px solid var(--accent-color);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
+    /* Sticky Header */
+    .sticky-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245, 179, 1, 0.25);
+      padding: 0.9rem 1.5rem;
+      transition: all 0.2s ease;
+    }
 
-        header h1 {
-            margin: 0;
-            color: var(--accent-color);
-            font-size: 24px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
 
-        .gst-note {
-            font-size: 12px;
-            color: var(--text-muted);
-            margin-top: 5px;
-        }
+    .hamburger {
+      font-size: 1.9rem;
+      cursor: pointer;
+      color: #f5b301;
+      transition: transform 0.2s;
+      width: 40px;
+    }
+    .hamburger:hover {
+      transform: scale(1.05);
+    }
 
-        /* Navigation Tabs */
-        .tabs {
-            display: flex;
-            overflow-x: auto;
-            background-color: var(--card-bg);
-            padding: 10px;
-            gap: 10px;
-            scrollbar-width: none; /* Hide scrollbar Firefox */
-        }
-        .tabs::-webkit-scrollbar {
-            display: none; /* Hide scrollbar Chrome/Safari */
-        }
+    .logo {
+      font-size: 1.7rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #f5b301 30%, #ffdd77 80%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    .logo span {
+      color: #fff;
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+      font-weight: 700;
+    }
 
-        .tab-btn {
-            background-color: transparent;
-            color: var(--text-main);
-            border: 1px solid #444;
-            padding: 8px 16px;
-            border-radius: 20px;
-            white-space: nowrap;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    .header-right {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 4px;
+    }
+    .tagline {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.3px;
+      color: #e0e0e0;
+    }
+    .outlet-badge {
+      background: #f5b30120;
+      backdrop-filter: blur(4px);
+      padding: 4px 10px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #f5b301;
+      border: 0.5px solid #f5b30170;
+    }
 
-        .tab-btn.active {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
-            color: #fff;
-            font-weight: bold;
-        }
+    /* Sidebar overlay (mobile menu) */
+    .sidebar-nav {
+      position: fixed;
+      top: 0;
+      left: -100%;
+      width: 85%;
+      max-width: 340px;
+      height: 100vh;
+      background: #111111;
+      z-index: 1100;
+      transition: left 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      box-shadow: 8px 0 25px rgba(0,0,0,0.8);
+      padding: 2rem 1.2rem;
+      overflow-y: auto;
+      border-right: 2px solid #f5b301;
+    }
+    .sidebar-nav.open {
+      left: 0;
+    }
+    .sidebar-nav .close-menu {
+      text-align: right;
+      font-size: 1.8rem;
+      cursor: pointer;
+      color: #f5b301;
+      margin-bottom: 1.8rem;
+    }
+    .sidebar-nav h4 {
+      font-size: 1.2rem;
+      border-left: 4px solid #f5b301;
+      padding-left: 12px;
+      margin: 1.2rem 0 0.8rem 0;
+      color: #f5b301;
+    }
+    .sidebar-nav ul {
+      list-style: none;
+    }
+    .sidebar-nav li {
+      margin: 0.9rem 0;
+    }
+    .sidebar-nav a {
+      color: #ddd;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.2s;
+      display: block;
+      padding: 4px 0;
+      font-size: 1rem;
+    }
+    .sidebar-nav a:hover {
+      color: #f5b301;
+      transform: translateX(6px);
+    }
+    .overlay-blur {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(3px);
+      z-index: 1050;
+      opacity: 0;
+      visibility: hidden;
+      transition: 0.2s;
+    }
+    .overlay-blur.active {
+      opacity: 1;
+      visibility: visible;
+    }
 
-        /* Menu Container */
-        .menu-container {
-            padding: 15px;
-        }
+    /* Main container */
+    .container {
+      max-width: 1300px;
+      margin: 2rem auto;
+      padding: 0 1.2rem;
+    }
 
-        .menu-section {
-            display: none; /* Hidden by default, toggled by JS */
-            animation: fadeIn 0.4s ease-in-out;
-        }
+    /* Grid layout cards */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 1rem;
+    }
 
-        .menu-section.active {
-            display: block;
-        }
+    /* Category Card */
+    .category-card {
+      background: #151515;
+      border-radius: 28px;
+      overflow: hidden;
+      transition: transform 0.25s ease, box-shadow 0.3s;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(2px);
+      border: 1px solid #2b2b2b;
+    }
+    .category-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 22px 35px -10px rgba(245, 179, 1, 0.25);
+      border-color: #f5b30140;
+    }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .card-img {
+      width: 100%;
+      height: 170px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+    .category-card:hover .card-img {
+      transform: scale(1.02);
+    }
 
-        .category-title {
-            font-size: 20px;
-            color: var(--accent-color);
-            border-bottom: 1px dashed #444;
-            padding-bottom: 8px;
-            margin-top: 20px;
-            margin-bottom: 15px;
-            text-align: center;
-            font-style: italic;
-        }
+    /* Yellow paint-style heading */
+    .card-heading {
+      background: #f5b301;
+      padding: 12px 18px;
+      margin: 0;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.3px;
+      color: #0a0a0a;
+      position: relative;
+      clip-path: polygon(0% 0%, 100% 0%, 97% 100%, 0% 100%);
+      text-transform: uppercase;
+      border-bottom: 2px solid #ffda77;
+      font-family: 'Inter', sans-serif;
+    }
 
-        .sub-category {
-            font-size: 16px;
-            background-color: #2a2a2a;
-            padding: 5px 10px;
-            border-radius: 4px;
-            margin-bottom: 10px;
-            display: inline-block;
-        }
+    .menu-items {
+      padding: 1rem 1rem 1.3rem;
+    }
 
-        /* Item Row */
-        .menu-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 12px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #222;
-        }
+    .menu-item-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.6rem 0;
+      border-bottom: 1px dashed #2c2c2c;
+      font-size: 0.95rem;
+      font-weight: 500;
+      transition: 0.1s;
+    }
+    .menu-item-row span:first-child {
+      font-weight: 500;
+      color: #eaeaea;
+    }
+    .menu-item-row .price {
+      font-weight: 700;
+      color: #f5b301;
+      background: #1e1e1e;
+      padding: 2px 9px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+    }
 
-        .item-details {
-            flex: 1;
-            padding-right: 15px;
-        }
+    /* bottom cta section */
+    .doorstep-section {
+      background: linear-gradient(145deg, #101010, #080808);
+      margin: 4rem 1.2rem 2rem;
+      padding: 2.5rem 1.5rem;
+      border-radius: 60px;
+      text-align: center;
+      border: 1px solid #2c2c2c;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+    }
+    .doorstep-icon {
+      font-size: 2.7rem;
+      color: #f5b301;
+      margin-bottom: 0.5rem;
+    }
+    .doorstep-section h3 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+    .order-now-btn {
+      background: #f5b301;
+      border: none;
+      padding: 14px 38px;
+      font-size: 1.3rem;
+      font-weight: 800;
+      border-radius: 60px;
+      color: #0a0a0a;
+      margin: 1rem 0;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 5px 0 #b87f00;
+      font-family: inherit;
+    }
+    .order-now-btn:hover {
+      transform: translateY(-2px);
+      background: #ffcc33;
+      box-shadow: 0 8px 18px rgba(245,179,1,0.4);
+    }
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 1.5rem 0 0.8rem;
+      font-size: 1.8rem;
+    }
+    .social-icons a {
+      color: #ccc;
+      transition: 0.2s;
+    }
+    .social-icons a:hover {
+      color: #f5b301;
+      transform: scale(1.1);
+    }
+    .website-link {
+      color: #f5b301;
+      text-decoration: none;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
 
-        .item-name {
-            font-size: 16px;
-            font-weight: 500;
-            margin-bottom: 4px;
-        }
+    footer {
+      text-align: center;
+      padding: 2rem 1rem 2rem;
+      font-size: 0.75rem;
+      color: #6c6c6c;
+    }
 
-        .item-desc {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
+    /* animations */
+    @keyframes fadeSlideUp {
+      0% { opacity: 0; transform: translateY(25px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .category-card {
+      animation: fadeSlideUp 0.5s ease forwards;
+    }
 
-        .item-price {
-            font-size: 16px;
-            font-weight: bold;
-            color: var(--text-main);
-            white-space: nowrap;
-        }
-
-        .price-tag {
-            color: var(--accent-color);
-            font-size: 14px;
-            margin-right: 2px;
-        }
-
-    </style>
+    @media (max-width: 680px) {
+      .header-container {
+        justify-content: space-between;
+      }
+      .logo {
+        font-size: 1.4rem;
+      }
+      .tagline {
+        font-size: 0.65rem;
+      }
+      .outlet-badge {
+        font-size: 0.6rem;
+      }
+      .card-heading {
+        font-size: 1.35rem;
+        padding: 10px 16px;
+      }
+      .menu-grid {
+        gap: 1.3rem;
+      }
+      .order-now-btn {
+        padding: 12px 28px;
+        font-size: 1.1rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>Indian Fast Food</h1>
-        <div class="gst-note">GST 5% EXTRA</div>
-    </header>
+<div class="overlay-blur" id="overlayBlur"></div>
 
-    <div class="tabs">
-        <button class="tab-btn active" onclick="openMenu('starters')">Starters & Fast Food</button>
-        <button class="tab-btn" onclick="openMenu('rice')">Rice & Pulao</button>
-        <button class="tab-btn" onclick="openMenu('noodles')">Noodles</button>
+<!-- Sidebar Menu (collapsible) -->
+<div class="sidebar-nav" id="sidebarMenu">
+  <div class="close-menu" id="closeSidebar"><i class="fas fa-times-circle"></i></div>
+  <div style="margin-bottom: 1rem;">
+    <i class="fas fa-utensils" style="color:#f5b301; font-size: 2rem;"></i>
+    <h3 style="color:white; margin-top: 0.2rem;">Rowdy Menu</h3>
+  </div>
+  <h4><i class="fas fa-fire"></i> All Categories</h4>
+  <ul id="menuNavList">
+    <!-- dynamically filled with js -->
+  </ul>
+</div>
+
+<header class="sticky-header">
+  <div class="header-container">
+    <div class="hamburger" id="hamburgerBtn">
+      <i class="fas fa-bars"></i>
     </div>
-
-    <div class="menu-container">
-        
-        <div id="starters" class="menu-section active">
-            <h2 class="category-title">Snacks & Starters</h2>
-            
-            <div class="sub-category">Burger & Pasta</div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Aloo Tikki Burger</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>49</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Aloo Tikki Cheese Burger</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>59</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">White Sauce Pasta</div>
-                    <div class="item-desc">[Half Portion]</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>109</div>
-            </div>
-
-            <div class="sub-category">Momos</div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Steam Momos</div>
-                    <div class="item-desc">(6 pieces)</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>49</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Fry Momos</div>
-                    <div class="item-desc">(6 pieces)</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>59</div>
-            </div>
-
-            <div class="sub-category">Kababs</div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Veg Soya Kabab</div>
-                    <div class="item-desc">(3 pieces)</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>59</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Roasted Kabab</div>
-                    <div class="item-desc">(4 pieces)</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>79</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Chilli Kabab</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>89</div>
-            </div>
-        </div>
-
-        <div id="rice" class="menu-section">
-            <h2 class="category-title">Rice Menu</h2>
-            
-            <div class="sub-category">Veg Rice</div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Veg Fried Rice [Half]</div>
-                    <div class="item-desc">Basic Fry Rice</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>59</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Plain Rice</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>80</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Jeera Rice</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>110</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Veg Pulao</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>120</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Veg Fried Rice [Full]</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>130</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Schezwan Veg Fried Rice</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>140</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Kashmiri Pulao</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>150</div>
-            </div>
-
-            <div class="sub-category">Non-Veg Rice</div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Egg Fried Rice</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>150</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Chicken Fried Rice</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>190</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Mixed Fried Rice</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>230</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Triple Fried Rice</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>250</div>
-            </div>
-        </div>
-
-        <div id="noodles" class="menu-section">
-            <h2 class="category-title">Noodles Menu</h2>
-            
-            <div class="sub-category">Veg Noodles</div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Chawmein (Veg Noodles)</div>
-                    <div class="item-desc">[Half Portion]</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>59</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Veg Noodles [Full]</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>130</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Schezwan Veg Noodles</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>140</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Mushroom Noodles</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>150</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Veg Hakka Noodles</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>160</div>
-            </div>
-
-            <div class="sub-category">Non-Veg Noodles</div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Egg Noodles</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>150</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Chicken Noodles</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>200</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Mixed Noodles</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>230</div>
-            </div>
-            <div class="menu-item">
-                <div class="item-details">
-                    <div class="item-name">Shanghai Chicken Noodles</div>
-                </div>
-                <div class="item-price"><span class="price-tag">₹</span>250</div>
-            </div>
-        </div>
-
+    <div class="logo">ROWDY <span>CAFE</span></div>
+    <div class="header-right">
+      <div class="tagline">🔥 Break the Rule, Taste the Difference</div>
+      <div class="outlet-badge">⭐ OVER 65 OUTLETS IN 8 STATES</div>
     </div>
+  </div>
+</header>
 
-    <script>
-        function openMenu(menuName) {
-            // Hide all menu sections
-            var i;
-            var x = document.getElementsByClassName("menu-section");
-            for (i = 0; i < x.length; i++) {
-                x[i].style.display = "none";
-                x[i].classList.remove("active");
-            }
-            
-            // Remove 'active' class from all buttons
-            var btns = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < btns.length; i++) {
-                btns[i].classList.remove("active");
-            }
-            
-            // Show the current menu section, and add an "active" class to the button that opened the tab
-            document.getElementById(menuName).style.display = "block";
-            document.getElementById(menuName).classList.add("active");
-            event.currentTarget.classList.add("active");
+<main class="container">
+  <div class="menu-grid" id="menuGrid"></div>
+</main>
+
+<!-- Bottom Call to Action -->
+<div class="doorstep-section">
+  <div class="doorstep-icon"><i class="fas fa-motorcycle"></i> <i class="fas fa-home"></i></div>
+  <h3>We deliver at your doorstep!</h3>
+  <button class="order-now-btn" id="orderNowBtn">🍔 ORDER NOW 🍟</button>
+  <div class="social-icons">
+    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+    <a href="#" aria-label="Whatsapp"><i class="fab fa-whatsapp"></i></a>
+  </div>
+  <div style="margin-top: 1rem;">
+    <a href="#" class="website-link">www.rowdycafe.com</a>
+  </div>
+  <p style="margin-top: 1rem; font-size: 0.7rem;">#RowdyCafe #TasteTheRowdy</p>
+</div>
+<footer>
+  © 2025 Rowdy Cafe — Break the rule, taste the rebellion.
+</footer>
+
+<script>
+  // --------------------------------------------------------------
+  // COMPLETE MENU DATA (21 categories with items & images)
+  // --------------------------------------------------------------
+  const categoriesData = [
+    { name: "Korean Ramen", image: "https://images.unsplash.com/photo-1569718212165-3a8278d5f624?w=500&auto=format", items: [{name:"Korean Spicy Veg Ramen", price:169},{name:"Korean Cheese Ramen", price:169},{name:"Korean Kimchi Ramen", price:169}] },
+    { name: "Pizza", image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=500&auto=format", items: [{name:"Margherita Pizza", price:199},{name:"Peppy Paneer Pizza", price:249},{name:"Farmhouse Delight", price:279},{name:"Peri Peri Veg", price:269}] },
+    { name: "Tandoori Bhatti Se", image: "https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?w=500&auto=format", items: [{name:"Steam Platter (2pcs *6 Varieties)", price:215},{name:"Fried Platter (2pcs*6 Varieties)", price:245},{name:"Tandoori Soya Chaap", price:189}] },
+    { name: "Burger", image: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=500&auto=format", items: [{name:"Veg Burger", price:75},{name:"Tandoori Burger", price:85},{name:"Peri Peri Burger", price:85}] },
+    { name: "Korean Corn Dog", image: "https://images.unsplash.com/photo-1626808642875-0aa545482dfb?w=500&auto=format", items: [{name:"Classic Cheese Corn Dog", price:149},{name:"Potato Corn Dog", price:169},{name:"Ramen Crunch Corn Dog", price:189},{name:"Half Cheese Half Sausage", price:179}] },
+    { name: "Platter", image: "https://images.unsplash.com/photo-1625938144755-6e0cff9905ab?w=500&auto=format", items: [{name:"Veg Crispy Platter", price:279},{name:"Mexican Fiesta Platter", price:299},{name:"Popcorn Platter", price:259}] },
+    { name: "French Fries", image: "https://images.unsplash.com/photo-1585109649139-366815a0d713?w=500&auto=format", items: [{name:"Salted Fries", price:99},{name:"Peri Peri Fries", price:119},{name:"Cheesy Fries", price:139},{name:"Chilli Cheese Fries", price:139}] },
+    { name: "Classic Momos", image: "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=500&auto=format", items: [{name:"Veg Momo", price:75},{name:"Veg Peri Peri Momo", price:95},{name:"Veg Cheese Momo", price:115},{name:"Paneer Achari Momo", price:115},{name:"Paneer Peri Peri Momo", price:115},{name:"Pizza Momo", price:125},{name:"Steamed (6PC.)", price:75},{name:"Fried (6PC.)", price:85},{name:"Kurkure (6PC.)", price:105}] },
+    { name: "Saucy AF Momos", image: "https://images.unsplash.com/photo-1626082927389-6cd097cdd6a6?w=500&auto=format", items: [{name:"Kungfu Schezwan", price:130},{name:"Chilly Manchurian", price:130},{name:"Tandoori Boom Boom", price:130},{name:"Peri Peri Devil", price:130},{name:"Momo served in spicy broth", price:130}] },
+    { name: "Sizzler", image: "https://images.unsplash.com/photo-1551024601-bec78aea704b?w=500&auto=format", items: [{name:"Veg sizzler with noodles", price:259, desc:"Sizzling veg noodles & stir-fry"},{name:"Paneer Tikka Sizzler", price:299}] },
+    { name: "Pahadi Soup Momos", image: "https://images.unsplash.com/photo-1617692855025-3388336ea2d1?w=500&auto=format", items: [{name:"Pahadi Soup Momo (Masala broth)", price:135},{name:"Nepali Jhol Momo", price:130}] },
+    { name: "Sweet Waffles", image: "https://images.unsplash.com/photo-1590086782792-42dd2350140c?w=500&auto=format", items: [{name:"Dark Chocolate Waffle", price:139},{name:"Milk Chocolate Waffle", price:138},{name:"Oreo Waffle", price:149},{name:"Triple Chocolate", price:169},{name:"Dark & White Rowdy Nutella", price:189}] },
+    { name: "Dessert Shake", image: "https://images.unsplash.com/photo-1579954115545-a95591f28bfc?w=500&auto=format", items: [{name:"Oreo Shake", price:199},{name:"Nutella Shake", price:249},{name:"Kit Kat Shake", price:220},{name:"Brownie Shake", price:239}] },
+    { name: "Desserts", image: "https://images.unsplash.com/photo-1551024506-0bccd828d307?w=500&auto=format", items: [{name:"Chocolate Brownie", price:79},{name:"Sizzling Brownie Ice Cream", price:139}] },
+    { name: "Cold Coffee", image: "https://images.unsplash.com/photo-1517701604599-bb29b565090c?w=500&auto=format", items: [{name:"Classic Cold Coffee", price:129},{name:"Hazelnut Cold Coffee", price:169},{name:"Caramel Cold Coffee", price:169}] },
+    { name: "Ice Tea's", image: "https://images.unsplash.com/photo-1556679343-c7306c1976bc?w=500&auto=format", items: [{name:"Lemon Ice Tea", price:119},{name:"Peach Ice Tea", price:119},{name:"Peach Passion Ice Tea", price:119},{name:"Mango Ice Tea", price:119}] },
+    { name: "Milky Boba Tea", image: "https://images.unsplash.com/photo-1558857563-ba0eab9468bb?w=500&auto=format", items: [{name:"Taro Bliss", price:199},{name:"Hongkong Fusion Classic Thai", price:149},{name:"Brown Sugar Boba", price:179}] },
+    { name: "Mojitos", image: "https://images.unsplash.com/photo-1600271886742-f049cd451bba?w=500&auto=format", items: [{name:"Classic Virgin Mojito", price:129},{name:"Blue Lagoon Mojito", price:129},{name:"Blueberry Mojito", price:129},{name:"Mango Mojito", price:129}] },
+    { name: "Fruit Milkshake", image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?w=500&auto=format", items: [{name:"Mango Shake", price:179},{name:"Strawberry Shake", price:179},{name:"Blueberry Shake", price:209}] },
+    { name: "Bubble Tea", image: "https://images.unsplash.com/photo-1558857563-ba0eab9468bb?w=500&auto=format", items: [{name:"Strawberry Bliss", price:169},{name:"Berry Refresher", price:169},{name:"Blue Citrus", price:169},{name:"Mango Passion", price:169},{name:"Kiwi Punch", price:169},{name:"Lychee Lush", price:169}] },
+    { name: "Signature Mocktails", image: "https://images.unsplash.com/photo-1515290332139-78e5a372e255?w=500&auto=format", items: [{name:"Spicy Guava Fizz", price:169},{name:"Passion Fruit Sparkler", price:169},{name:"Watermelon Basil Smash", price:169},{name:"Mango Tango Cooler", price:149}] }
+  ];
+
+  // Helper to render menu items (handling extra desc if needed)
+  function renderItemRows(items) {
+    return items.map(item => {
+      let displayName = item.name;
+      if(item.desc) displayName = `${item.name} (${item.desc})`;
+      return `<div class="menu-item-row">
+                <span>${displayName}</span>
+                <span class="price">₹${item.price}</span>
+              </div>`;
+    }).join('');
+  }
+
+  // Build all categories into grid
+  function buildMenu() {
+    const grid = document.getElementById('menuGrid');
+    if(!grid) return;
+    grid.innerHTML = '';
+    categoriesData.forEach(cat => {
+      const card = document.createElement('div');
+      card.className = 'category-card';
+      // items array
+      const itemsHtml = renderItemRows(cat.items);
+      card.innerHTML = `
+        <img class="card-img" src="${cat.image}" alt="${cat.name}" loading="lazy" onerror="this.src='https://placehold.co/600x400?text=Rowdy+Eats'">
+        <div class="card-heading">${cat.name}</div>
+        <div class="menu-items">
+          ${itemsHtml}
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  // Build navigation links for sidebar
+  function buildNavLinks() {
+    const navList = document.getElementById('menuNavList');
+    if(!navList) return;
+    navList.innerHTML = '';
+    categoriesData.forEach((cat, idx) => {
+      const li = document.createElement('li');
+      const link = document.createElement('a');
+      link.href = '#';
+      link.textContent = cat.name;
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        // scroll to section (by category card order)
+        const cards = document.querySelectorAll('.category-card');
+        if(cards[idx]) {
+          cards[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+          closeSidebar();
         }
-    </script>
+      });
+      li.appendChild(link);
+      navList.appendChild(li);
+    });
+    // add extra dummy or exact same as categories
+  }
 
+  // Toggle sidebar logic
+  const sidebar = document.getElementById('sidebarMenu');
+  const overlay = document.getElementById('overlayBlur');
+  const hamburger = document.getElementById('hamburgerBtn');
+  const closeBtn = document.getElementById('closeSidebar');
+
+  function openSidebar() {
+    sidebar.classList.add('open');
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeSidebar() {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  if(hamburger) hamburger.addEventListener('click', openSidebar);
+  if(closeBtn) closeBtn.addEventListener('click', closeSidebar);
+  if(overlay) overlay.addEventListener('click', closeSidebar);
+
+  // ORDER NOW button action (alert / delivery)
+  const orderBtn = document.getElementById('orderNowBtn');
+  if(orderBtn) {
+    orderBtn.addEventListener('click', () => {
+      alert("🔥 Let's get rowdy! 🛵 Your order will be delivered soon. (Demo interaction)");
+    });
+  }
+
+  // smooth initial load + handle viewport, adjust any image fallback
+  document.addEventListener('DOMContentLoaded', () => {
+    buildMenu();
+    buildNavLinks();
+    // mobile/desktop scroll enhancements
+    const allLinks = document.querySelectorAll('.sidebar-nav a');
+    allLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        // already handled by dynamic build but ensure close anyways
+        if(link.getAttribute('href') === '#') e.preventDefault();
+        setTimeout(closeSidebar, 100);
+      });
+    });
+  });
+
+  // add small fix for sizzler description rendering (already handled renderItemRows with improved presentation)
+  // patch sizzler category to add proper description (update data for sizzler first item specifically)
+  const sizzlerIndex = categoriesData.findIndex(c => c.name === "Sizzler");
+  if(sizzlerIndex !== -1) {
+    if(categoriesData[sizzlerIndex].items[0] && categoriesData[sizzlerIndex].items[0].name === "Veg sizzler with noodles") {
+      categoriesData[sizzlerIndex].items[0].desc = "Sizzling noodles & veggies";
+    }
+  }
+  // final rebuild to capture desc lines
+  function rebuildWithDesc() {
+    buildMenu();  // rebuild to incorporate any desc later
+  }
+  rebuildWithDesc();
+  // For extra smoothness, remove any duplicate
+  window.addEventListener('load', () => {
+    document.querySelectorAll('.card-img').forEach(img => {
+      img.addEventListener('error', () => {
+        img.src = 'https://placehold.co/600x400/1a1a1a/f5b301?text=Rowdy+Food';
+      });
+    });
+  });
+</script>
 </body>
 </html>
